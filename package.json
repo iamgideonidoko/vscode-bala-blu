@@ -3,6 +3,12 @@
   "displayName": "Bala Blu",
   "description": "A Visual Studio Code extension that adds dummy bala blu text in your editor",
   "version": "0.0.1",
+  "publisher": "Gideon Idoko",
+  "homepage": "https://github.com/IamGideonIdoko/vscode-bala-blu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IamGideonIdoko/vscode-bala-blu"
+  },
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -63,5 +69,5 @@
   "dependencies": {
     "lorem-ipsum": "^2.0.8"
   },
-  "icon": "images/bala_blue_icon.png"
+  "icon": "https://raw.githubusercontent.com/IamGideonIdoko/vscode-bala-blu/master/images/bala_blue_icon.png"
 }
