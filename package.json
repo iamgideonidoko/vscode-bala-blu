@@ -1,7 +1,7 @@
 {
   "name": "bala-blu",
   "displayName": "Bala Blu",
-  "description": "An alternative dummy text extension",
+  "description": "A Visual Studio Code extension that adds dummy bala blu text in your editor",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.74.0"
@@ -62,5 +62,6 @@
   },
   "dependencies": {
     "lorem-ipsum": "^2.0.8"
-  }
+  },
+  "icon": "images/bala_blue_icon.png"
 }
