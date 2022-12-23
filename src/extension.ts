@@ -1,10 +1,10 @@
 // VS Code extensibility API module
 import * as vscode from 'vscode';
-import { addLine, addParagraph, addManyParagraphs } from './utils/global.util';
+import { addLine, addParagraph, addManyParagraphs, textCompletionProvider } from './utils/global.util';
 
 // called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "bala-blu" is now active!');
+  console.log('Bala blu is active!');
 
   /**
    * Register line insertion (callbacks will be run every time the registered commands are executed)
@@ -14,11 +14,18 @@ export function activate(context: vscode.ExtensionContext) {
   const addLineDisposable = vscode.commands.registerCommand('bala-blu.line', addLine);
   const addParagraphDisposable = vscode.commands.registerCommand('bala-blu.paragraph', addParagraph);
   const addManyParagraphDisposable = vscode.commands.registerCommand('bala-blu.manyParagraphs', addManyParagraphs);
+  const textCompletionDisposable = vscode.languages.registerCompletionItemProvider(
+    { pattern: '** ' },
+    textCompletionProvider,
+  );
 
   // add disposables
-  context.subscriptions.push(addLineDisposable);
-  context.subscriptions.push(addParagraphDisposable);
-  context.subscriptions.push(addManyParagraphDisposable);
+  context.subscriptions.push(
+    addLineDisposable,
+    addParagraphDisposable,
+    addManyParagraphDisposable,
+    textCompletionDisposable,
+  );
 }
 
 // called when the extension is deactivated

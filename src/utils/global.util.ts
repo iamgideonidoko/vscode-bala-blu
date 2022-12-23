@@ -9,7 +9,7 @@ export const addTextToEditor = (loremIpsumParams: Omit<ILoremIpsumParams, 'words
     editor.edit((edit) =>
       editor.selections.forEach((selection) => {
         edit.delete(selection);
-        edit.insert(selection.start, loremIpsum({ ...loremIpsumParams, words: WORDS }));
+        edit.insert(selection.start, addPrefix(lowerFirstLetter(loremIpsum({ ...loremIpsumParams, words: WORDS }))));
       }),
     );
   }
@@ -43,3 +43,42 @@ export const addManyParagraphs = async () => {
     units: 'paragraphs',
   });
 };
+
+export const textCompletionProvider: vscode.CompletionItemProvider = {
+  provideCompletionItems: async (document, position) => {
+    const currentWord = getCurrentWord(document, position);
+    const triggerRegex = /bala+[0-9]{0,3}$/gi;
+    if (currentWord.match(triggerRegex)) {
+      const wordCount = Number(currentWord.replace('bala', ''));
+      const completion = new vscode.CompletionItem(`bala${wordCount || ''}`.trim());
+      const textToInsert =
+        !wordCount || wordCount === 1
+          ? 'Bala'
+          : wordCount === 2
+          ? 'Bala blu'
+          : addPrefix(
+              lowerFirstLetter(
+                loremIpsum({ count: wordCount - 2, units: wordCount ? 'words' : 'sentences', words: WORDS }),
+              ),
+            );
+      completion.insertText = new vscode.SnippetString(textToInsert);
+      return [completion];
+    }
+    return [];
+  },
+};
+
+export const getCurrentWord = (document: vscode.TextDocument, position: vscode.Position): string => {
+  const wordAtPosition = document.getWordRangeAtPosition(position);
+  let currentWord = '';
+  if (wordAtPosition && wordAtPosition.start.character < position.character) {
+    const word = document.getText(wordAtPosition);
+    currentWord = word.substr(0, position.character - wordAtPosition.start.character);
+  }
+
+  return currentWord;
+};
+
+export const addPrefix = (text: string): string => `Bala blu ${text}`;
+
+export const lowerFirstLetter = (text: string): string => text.charAt(0).toLowerCase() + text.slice(1);
