@@ -61,6 +61,6 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
-    "bala-blu": "^2.0.8"
+    "lorem-ipsum": "^2.0.8"
   }
 }
